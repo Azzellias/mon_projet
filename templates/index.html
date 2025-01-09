@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Affichage des données en temps réel</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+        }
+        .data {
+            font-size: 2em;
+            margin-top: 20px;
+        }
+    </style>
+    <script>
+        function fetchData() {
+            // Envoyer une requête pour récupérer les dernières données
+            fetch("/getData")
+                .then(response => response.json())
+                .then(data => {
+                    // Mettre à jour l'affichage des données
+                    document.getElementById("temperature").innerText = "Température: " + data.temperature + " °C";
+                    document.getElementById("humidity").innerText = "Humidité: " + data.humidity + " %";
+                })
+                .catch(error => console.error("Erreur lors de la récupération des données :", error));
+        }
+
+        // Mettre à jour les données toutes les 5 secondes
+        setInterval(fetchData, 5000);
+        window.onload = fetchData; // Charger les données immédiatement au démarrage
+    </script>
+</head>
+<body>
+    <h1>Données de l'ESP en temps réel</h1>
+    <div class="data">
+        <p id="temperature">Chargement...</p>
+        <p id="humidity">Chargement...</p>
+    </div>
+</body>
+</html>
