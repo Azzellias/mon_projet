@@ -43,5 +43,11 @@ def get_data():
     except FileNotFoundError:
         return "Aucune donnée disponible.", 404
 
+# Route de vérification de santé
+@app.route('/health', methods=['GET'])
+def health_check():
+    return "Server is running!"
+
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=80)  # Permet d'écouter sur toutes les interfaces réseau
+    port = int(os.environ.get('PORT', 80))  # Utilise le port défini dans les variables d'environnement ou 80 par défaut
+    app.run(host='0.0.0.0', port=port)
